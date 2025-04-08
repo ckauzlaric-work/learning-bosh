@@ -1,0 +1,9 @@
+---
+name: server
+
+templates:
+  ctl.erb: bin/ctl
+
+packages: []
+
+properties: {}
