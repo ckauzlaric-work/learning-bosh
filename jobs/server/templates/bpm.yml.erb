@@ -1,0 +1,18 @@
+<%=
+require 'yaml'
+
+bpm = {
+  "processes" => [
+    { "name" => "server",
+      "executable" => "/var/vcap/packages/server/bin/server",
+      "args" => [ "-c", "/var/vcap/jobs/server/config/server.yml"],
+      "env" => {
+        "GODEBUG" => "netdns=cgo"
+      },
+      "capabilities" => ["NET_BIND_SERVICE"]
+    },
+  ]
+}
+
+YAML.dump(bpm)
+%>

@@ -4,6 +4,10 @@ name: server
 templates:
   ctl.erb: bin/ctl
 
-packages: []
+packages:
+- server
 
-properties: {}
+properties:
+  port:
+    description: "Listening Port for Server."
+    default: 8080

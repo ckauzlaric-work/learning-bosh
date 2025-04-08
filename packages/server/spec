@@ -1,0 +1,11 @@
+---
+name: server
+
+dependencies:
+- golang-1.24-linux
+
+files:
+- server/go.mod
+- server/main.go
+- server/handlers/proxy_handler.go
+- server/handlers/request_info_handler.go

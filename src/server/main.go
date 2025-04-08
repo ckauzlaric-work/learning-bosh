@@ -7,15 +7,42 @@ import (
 	"os"
 	"strconv"
 
-	"proxy/handlers"
+	"gopkg.in/yaml.v2"
+
+	"server/handlers"
 )
 
 const (
-	defaultName = "proxy"
+	defaultName    = "proxy"
+	ConfigFilename = "server.yml"
 )
 
+type Config struct {
+	Port int `yaml:"port"`
+}
+
+func GetConfig() (*Config, error) {
+	c := &Config{}
+	yamlFile, err := os.ReadFile(ConfigFilename)
+	if err != nil {
+		log.Printf("yamlFile.Get err #%v ", err)
+		return nil, err
+	}
+	err = yaml.Unmarshal(yamlFile, c)
+	if err != nil {
+		log.Fatalf("Unmarshal: %v", err)
+	}
+
+	return c, nil
+}
+
 func main() {
-	port := getEnvVar("PORT", 8080, false)
+	c, err := GetConfig()
+	if err != nil {
+		log.Printf("warning: failed to fetch config %#v", err)
+		panic(err)
+	}
+
 	name, ok := os.LookupEnv("NAME")
 	if !ok {
 		log.Printf("warning: NAME env var not provided, using default name: %s", defaultName)
@@ -26,7 +53,7 @@ func main() {
 	mux.Handle("/", &handlers.RequestInfoHandler{Name: name})
 	mux.Handle("/proxy/", &handlers.ProxyHandler{})
 
-	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", port), mux)
+	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", c.Port), mux)
 }
 
 func getEnvVar(key string, defaultValue int, failIfDNE bool) int {

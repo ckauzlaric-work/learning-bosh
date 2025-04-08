@@ -1,1 +1,6 @@
+---
 name: clay
+blobstore:
+  provider: local
+  options:
+    blobstore_path: /tmp/blobs
