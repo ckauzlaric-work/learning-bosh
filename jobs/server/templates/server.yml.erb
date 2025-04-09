@@ -1,0 +1,9 @@
+<%
+  require 'json'
+
+  config = {
+    "port" => p("port"),
+  }
+%>
+
+<%= JSON.pretty_generate(config) %> 
