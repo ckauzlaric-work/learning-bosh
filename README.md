@@ -2,6 +2,8 @@
 
 Followed the [Bosh docs](https://bosh.io/docs/create-release/) to create a simple bosh release.
 
+I vendored in the package for golang using this: https://github.com/cloudfoundry/bosh-package-golang-release
+
 I added it as an instance group to an existing CloudFoundry Bosh deployment, like this:
 ```
 instance_groups:
